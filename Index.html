@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrandForge Pro - Generador de Identidad de Marca con IA</title>
+    <meta name="description" content="Crea identidades de marca profesionales en minutos con inteligencia artificial. Logos, paletas de colores, tipografías y más.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .brand-preview {
+            background: linear-gradient(45deg, #f0f2f5, #ffffff);
+            border: 2px solid #e1e5e9;
+        }
+        
+        .loading-spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .modal-backdrop {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+        
+        .success-checkmark {
+            animation: checkmark 0.6s ease-in-out;
+        }
+        
+        @keyframes checkmark {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 gradient-bg rounded-lg flex items-center justify-center">
+                        <i class="fas fa-magic text-white text-lg"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold text-gray-900">BrandForge Pro</h1>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#inicio" class="text-gray-700 hover:text-indigo-600 transition-colors">Inicio</a>
+                    <a href="#caracteristicas" class="text-gray-700 hover:text-indigo-600 transition-colors">Características</a>
+                    <a href="#precios" class="text-gray-700 hover:text-indigo-600 transition-colors">Precios</a>
+                    <a href="#contacto" class="text-gray-700 hover:text-indigo-600 transition-colors">Contacto</a>
+                </nav>
+                <button id="loginBtn" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
+                    Iniciar Sesión
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="gradient-bg py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="text-white">
+                    <h2 class="text-5xl font-bold mb-6 leading-tight">
+                        Crea tu Identidad de Marca 
+                        <span class="text-yellow-300">en Minutos</span>
+                    </h2>
+                    <p class="text-xl mb-8 text-indigo-100">
+                        Genera logos profesionales, paletas de colores perfectas y guías de marca completas usando inteligencia artificial avanzada.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button id="startGenerating" class="bg-yellow-400 text-gray-900 px-8 py-4 rounded-lg font-semibold hover:bg-yellow-300 transition-colors text-lg">
+                            <i class="fas fa-rocket mr-2"></i>
+                            Generar Mi Marca Ahora
+                        </button>
+                        <button class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-indigo-600 transition-colors">
+                            <i class="fas fa-play mr-2"></i>
+                            Ver Demo
+                        </button>
+                    </div>
+                    <div class="mt-8 flex items-center space-x-6 text-indigo-100">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle mr-2 text-green-300"></i>
+                            <span>Sin suscripción</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle mr-2 text-green-300"></i>
+                            <span>Resultados instantáneos</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle mr-2 text-green-300"></i>
+                            <span>Calidad profesional</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="animate-float">
+                        <div class="bg-white rounded-2xl shadow-2xl p-8">
+                            <div class="text-center mb-6">
+                                <div class="w-20 h-20 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                                    <i class="fas fa-crown text-white text-2xl"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold text-gray-900">TechFlow</h3>
+                                <p class="text-gray-600">Innovación Digital</p>
+                            </div>
+                            <div class="grid grid-cols-4 gap-2 mb-4">
+                                <div class="w-full h-8 bg-purple-500 rounded"></div>
+                                <div class="w-full h-8 bg-pink-500 rounded"></div>
+                                <div class="w-full h-8 bg-blue-500 rounded"></div>
+                                <div class="w-full h-8 bg-gray-800 rounded"></div>
+                            </div>
+                            <div class="text-center text-sm text-gray-500">
+                                Generado en 2.3 segundos
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="caracteristicas" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                    Todo lo que Necesitas para tu Marca
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Una suite completa de herramientas de branding impulsadas por IA para crear identidades visuales profesionales.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card-hover bg-white p-8 rounded-xl shadow-lg border">
+                    <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-palette text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Generación de Logos</h3>
+                    <p class="text-gray-600 mb-4">
+                        Crea logos únicos y profesionales en segundos. Múltiples estilos, formas y conceptos adaptados a tu industria.
+                    </p>
+                    <ul class="text-sm text-gray-500 space-y-2">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>+50 estilos diferentes</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Vectores escalables</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Múltiples formatos</li>
+                    </ul>
+                </div>
+
+                <div class="card-hover bg-white p-8 rounded-xl shadow-lg border">
+                    <div class="w-16 h-16 bg-purple-100 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-swatchbook text-purple-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Paletas de Colores</h3>
+                    <p class="text-gray-600 mb-4">
+                        Paletas armoniosas basadas en psicología del color y tendencias actuales de diseño.
+                    </p>
+                    <ul class="text-sm text-gray-500 space-y-2">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Teoría del color aplicada</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Códigos HEX y RGB</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Variaciones automáticas</li>
+                    </ul>
+                </div>
+
+                <div class="card-hover bg-white p-8 rounded-xl shadow-lg border">
+                    <div class="w-16 h-16 bg-green-100 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-font text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Tipografías</h3>
+                    <p class="text-gray-600 mb-4">
+                        Combinaciones tipográficas perfectas que complementan tu identidad visual.
+                    </p>
+                    <ul class="text-sm text-gray-500 space-y-2">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Pares tipográficos</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Fuentes web-safe</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Jerarquía visual</li>
+                    </ul>
+                </div>
+
+                <div class="card-hover bg-white p-8 rounded-xl shadow-lg border">
+                    <div class="w-16 h-16 bg-red-100 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-file-alt text-red-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Guía de Marca</h3>
+                    <p class="text-gray-600 mb-4">
+                        Documentación completa con especificaciones técnicas y usos correctos de tu marca.
+                    </p>
+                    <ul class="text-sm text-gray-500 space-y-2">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Manual de uso</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Especificaciones técnicas</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Ejemplos de aplicación</li>
+                    </ul>
+                </div>
+
+                <div class="card-hover bg-white p-8 rounded-xl shadow-lg border">
+                    <div class="w-16 h-16 bg-yellow-100 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-images text-yellow-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Mockups</h3>
+                    <p class="text-gray-600 mb-4">
+                        Visualiza tu marca en contextos reales con mockups profesionales automáticos.
+                    </p>
+                    <ul class="text-sm text-gray-500 space-y-2">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Tarjetas de presentación</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Papelería corporativa</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Aplicaciones digitales</li>
+                    </ul>
+                </div>
+
+                <div class="card-hover bg-white p-8 rounded-xl shadow-lg border">
+                    <div class="w-16 h-16 bg-indigo-100 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-download text-indigo-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Descarga Completa</h3>
+                    <p class="text-gray-600 mb-4">
+                        Todos los archivos en formatos profesionales listos para usar en cualquier medio.
+                    </p>
+                    <ul class="text-sm text-gray-500 space-y-2">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>PNG, SVG, PDF</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Alta resolución</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Uso comercial</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brand Generator Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                    Generador de Marca IA
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Completa la información y deja que nuestra IA cree tu identidad de marca perfecta
+                </p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-xl p-8">
+                <form id="brandForm" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Nombre de la Empresa *
+                            </label>
+                            <input type="text" id="companyName" required 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                   placeholder="Ej: TechFlow Solutions">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Industria *
+                            </label>
+                            <select id="industry" required 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                                <option value="">Selecciona una industria</option>
+                                <option value="tecnologia">Tecnología</option>
+                                <option value="salud">Salud y Bienestar</option>
+                                <option value="educacion">Educación</option>
+                                <option value="finanzas">Finanzas</option>
+                                <option value="retail">Retail y E-commerce</option>
+                                <option value="alimentacion">Alimentación</option>
+                                <option value="inmobiliaria">Inmobiliaria</option>
+                                <option value="consultoria">Consultoría</option>
+                                <option value="creatividad">Creatividad y Diseño</option>
+                                <option value="deportes">Deportes y Fitness</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Descripción del Negocio
+                        </label>
+                        <textarea id="businessDescription" rows="3"
+                                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                  placeholder="Describe brevemente qué hace tu empresa y cuál es su propuesta de valor..."></textarea>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Estilo Preferido
+                            </label>
+                            <select id="style" 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                                <option value="moderno">Moderno y Minimalista</option>
+                                <option value="clasico">Clásico y Elegante</option>
+                                <option value="creativo">Creativo y Artístico</option>
+                                <option value="corporativo">Corporativo y Profesional</option>
+                                <option value="juvenil">Juvenil y Dinámico</option>
+                                <option value="lujo">Lujo y Premium</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Colores Preferidos
+                            </label>
+                            <select id="colorPreference" 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                                <option value="azul">Azules (Confianza, Profesionalismo)</option>
+                                <option value="verde">Verdes (Naturaleza, Crecimiento)</option>
+                                <option value="rojo">Rojos (Energía, Pasión)</option>
+                                <option value="morado">Morados (Creatividad, Lujo)</option>
+                                <option value="naranja">Naranjas (Entusiasmo, Calidez)</option>
+                                <option value="neutro">Neutros (Elegancia, Versatilidad)</option>
+                                <option value="sorprendeme">Sorpréndeme</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Palabras Clave (opcional)
+                        </label>
+                        <input type="text" id="keywords" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                               placeholder="Ej: innovación, confianza, velocidad, calidad">
+                        <p class="text-sm text-gray-500 mt-1">Separa las palabras con comas</p>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" id="generateBtn" 
+                                class="bg-indigo-600 text-white px-12 py-4 rounded-lg font-semibold hover:bg-indigo-700 transition-colors text-lg">
+                            <i class="fas fa-magic mr-2"></i>
+                            Generar Mi Marca
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section id="resultsSection" class="py-20 bg-white hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                    Tu Nueva Identidad de Marca
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Generada especialmente para tu negocio
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Logo Preview -->
+                <div class="bg-gray-50 rounded-2xl p-8">
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-6">Logo Principal</h3>
+                    <div class="brand-preview rounded-xl p-12 text-center mb-6">
+                        <div id="logoPreview" class="inline-block">
+                            <!-- Logo will be generated here -->
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="bg-white rounded-lg p-4 text-center">
+                            <div id="logoVariant1" class="mb-2">
+                                <!-- Variant 1 -->
+                            </div>
+                            <p class="text-xs text-gray-500">Variante 1</p>
+                        </div>
+                        <div class="bg-gray-900 rounded-lg p-4 text-center">
+                            <div id="logoVariant2" class="mb-2">
+                                <!-- Variant 2 -->
+                            </div>
+                            <p class="text-xs text-gray-300">Variante 2</p>
+                        </div>
+                        <div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg p-4 text-center">
+                            <div id="logoVariant3" class="mb-2">
+                                <!-- Variant 3 -->
+                            </div>
+                            <p class="text-xs text-white">Variante 3</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Brand Details -->
+                <div class="space-y-8">
+                    <!-- Color Palette -->
+                    <div>
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-4">Paleta de Colores</h3>
+                        <div id="colorPalette" class="grid grid-cols-4 gap-4">
+                            <!-- Colors will be generated here -->
+                        </div>
+                    </div>
+
+                    <!-- Typography -->
+                    <div>
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-4">Tipografía</h3>
+                        <div class="space-y-4">
+                            <div class="bg-gray-50 rounded-lg p-4">
+                                <p class="text-sm text-gray-600 mb-2">Tipografía Principal</p>
+                                <p id="primaryFont" class="text-2xl font-bold">Inter Bold</p>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg p-4">
+                                <p class="text-sm text-gray-600 mb-2">Tipografía Secundaria</p>
+                                <p id="secondaryFont" class="text-lg">Inter Regular</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Brand Values -->
+                    <div>
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-4">Valores de Marca</h3>
+                        <div id="brandValues" class="flex flex-wrap gap-2">
+                            <!-- Values will be generated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Download Section -->
+            <div class="mt-16 text-center">
+                <div class="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl p-8 text-white">
+                    <h3 class="text-3xl font-bold mb-4">¿Te Gusta tu Nueva Marca?</h3>
+                    <p class="text-xl mb-8 text-indigo-100">
+                        Descarga todos los archivos profesionales y la guía de marca completa
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button id="downloadPackage" class="bg-white text-indigo-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                            <i class="fas fa-download mr-2"></i>
+                            Descargar Paquete Completo - $49
+                        </button>
+                        <button id="regenerateBtn" class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-indigo-600 transition-colors">
+                            <i class="fas fa-redo mr-2"></i>
+                            Generar Nueva Versión
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="precios" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                    Precios Transparentes
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Sin suscripciones. Paga solo por lo que necesitas.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Basic Plan -->
+                <div class="bg-white rounded-2xl shadow-lg p-8 border">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Básico</h3>
+                        <div class="text-4xl font-bold text-gray-900 mb-2">$19</div>
+                        <p class="text-gray-600">Perfecto para empezar</p>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>1 Logo principal + 2 variantes</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Paleta de 4 colores</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>2 tipografías</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Archivos PNG y JPG</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Uso comercial básico</span>
+                        </li>
+                    </ul>
+                    <button class="w-full bg-gray-900 text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors">
+                        Elegir Básico
+                    </button>
+                </div>
+
+                <!-- Pro Plan -->
+                <div class="bg-white rounded-2xl shadow-xl p-8 border-2 border-indigo-500 relative">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                        <span class="bg-indigo-500 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                            Más Popular
+                        </span>
+                    </div>
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Profesional</h3>
+                        <div class="text-4xl font-bold text-indigo-600 mb-2">$49</div>
+                        <p class="text-gray-600">Para negocios serios</p>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>1 Logo principal + 5 variantes</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Paleta completa de colores</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Tipografías profesionales</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Todos los formatos (PNG, SVG, PDF)</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Guía de marca completa</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Mockups profesionales</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Uso comercial completo</span>
+                        </li>
+                    </ul>
+                    <button class="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors">
+                        Elegir Profesional
+                    </button>
+                </div>
+
+                <!-- Enterprise Plan -->
+                <div class="bg-white rounded-2xl shadow-lg p-8 border">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Empresarial</h3>
+                        <div class="text-4xl font-bold text-gray-900 mb-2">$99</div>
+                        <p class="text-gray-600">Solución completa</p>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Logos ilimitados + variantes</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Paletas múltiples</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Sistema tipográfico completo</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Todos los formatos + vectores</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Manual de marca extendido</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Mockups premium</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Soporte prioritario</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            <span>Revisiones ilimitadas</span>
+                        </li>
+                    </ul>
+                    <button class="w-full bg-gray-900 text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors">
+                        Elegir Empresarial
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contacto" class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                    ¿Necesitas Ayuda?
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Nuestro equipo está aquí para ayudarte a crear la marca perfecta
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-6">Contáctanos</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope text-indigo-600 mr-4 text-xl"></i>
+                            <span class="text-gray-700">soporte@brandforge.pro</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-phone text-indigo-600 mr-4 text-xl"></i>
+                            <span class="text-gray-700">+1 (555) 123-4567</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-clock text-indigo-600 mr-4 text-xl"></i>
+                            <span class="text-gray-700">Lun - Vie: 9:00 AM - 6:00 PM</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-8">
+                        <h4 class="text-lg font-semibold text-gray-900 mb-4">Síguenos</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 bg-indigo-600 text-white rounded-full flex items-center justify-center hover:bg-indigo-700 transition-colors">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-indigo-600 text-white rounded-full flex items-center justify-center hover:bg-indigo-700 transition-colors">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-indigo-600 text-white rounded-full flex items-center justify-center hover:bg-indigo-700 transition-colors">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <form class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Nombre
+                            </label>
+                            <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Email
+                            </label>
+                            <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Mensaje
+                            </label>
+                            <textarea rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors">
+                            Enviar Mensaje
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 gradient-bg rounded-lg flex items-center justify-center">
+                            <i class="fas fa-magic text-white text-lg"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">BrandForge Pro</h3>
+                    </div>
+                    <p class="text-gray-400">
+                        Creando identidades de marca profesionales con inteligencia artificial.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Producto</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Características</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Precios</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Ejemplos</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">API</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Soporte</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Centro de Ayuda</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Contacto</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Tutoriales</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Estado del Servicio</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Términos de Uso</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Privacidad</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Cookies</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Licencias</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 BrandForge Pro. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Loading Modal -->
+    <div id="loadingModal" class="fixed inset-0 modal-backdrop hidden z-50 flex items-center justify-center">
+        <div class="bg-white rounded-2xl p-8 max-w-md mx-4 text-center">
+            <div class="loading-spinner mx-auto mb-4"></div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Generando tu Marca</h3>
+            <p class="text-gray-600 mb-4">Nuestra IA está creando tu identidad perfecta...</p>
+            <div class="text-sm text-gray-500">
+                <span id="loadingStep">Analizando tu industria...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 modal-backdrop hidden z-50 flex items-center justify-center">
+        <div class="bg-white rounded-2xl p-8 max-w-md mx-4 text-center">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-check text-green-600 text-2xl success-checkmark"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">¡Marca Generada!</h3>
+            <p class="text-gray-600 mb-6">Tu nueva identidad de marca está lista. Revisa los resultados abajo.</p>
+            <button id="closeSuccessModal" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
+                Ver Resultados
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Brand generation data
+        const brandTemplates = {
+            tecnologia: {
+                colors: ['#667eea', '#764ba2', '#f093fb', '#f5576c'],
+                fonts: ['Inter', 'Roboto'],
+                values: ['Innovación', 'Eficiencia', 'Futuro', 'Confiabilidad'],
+                icons: ['fas fa-rocket', 'fas fa-microchip', 'fas fa-code', 'fas fa-cog']
+            },
+            salud: {
+                colors: ['#56ab2f', '#a8edea', '#fed6e3', '#d299c2'],
+                fonts: ['Lato', 'Open Sans'],
+                values: ['Bienestar', 'Cuidado', 'Confianza', 'Profesionalismo'],
+                icons: ['fas fa-heartbeat', 'fas fa-leaf', 'fas fa-shield-alt', 'fas fa-user-md']
+            },
+            educacion: {
+                colors: ['#f7971e', '#ffd200', '#06beb6', '#48b1bf'],
+                fonts: ['Nunito', 'Source Sans Pro'],
+                values: ['Conocimiento', 'Crecimiento', 'Inspiración', 'Excelencia'],
+                icons: ['fas fa-graduation-cap', 'fas fa-book', 'fas fa-lightbulb', 'fas fa-users']
+            },
+            finanzas: {
+                colors: ['#134e5e', '#71b280', '#ffecd2', '#fcb69f'],
+                fonts: ['Montserrat', 'Playfair Display'],
+                values: ['Seguridad', 'Crecimiento', 'Estabilidad', 'Prosperidad'],
+                icons: ['fas fa-chart-line', 'fas fa-coins', 'fas fa-shield-alt', 'fas fa-piggy-bank']
+            },
+            retail: {
+                colors: ['#ff9a9e', '#fecfef', '#ffecd2', '#fcb69f'],
+                fonts: ['Poppins', 'Raleway'],
+                values: ['Calidad', 'Estilo', 'Accesibilidad', 'Tendencia'],
+                icons: ['fas fa-shopping-bag', 'fas fa-tags', 'fas fa-star', 'fas fa-gift']
+            }
+        };
+
+        // DOM Elements
+        const brandForm = document.getElementById('brandForm');
+        const generateBtn = document.getElementById('generateBtn');
+        const loadingModal = document.getElementById('loadingModal');
+        const successModal = document.getElementById('successModal');
+        const resultsSection = document.getElementById('resultsSection');
+        const startGeneratingBtn = document.getElementById('startGenerating');
+
+        // Event Listeners
+        startGeneratingBtn.addEventListener('click', () => {
+            document.getElementById('brandForm').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        brandForm.addEventListener('submit', handleFormSubmit);
+        document.getElementById('closeSuccessModal').addEventListener('click', closeSuccessModal);
+        document.getElementById('regenerateBtn').addEventListener('click', regenerateBrand);
+        document.getElementById('downloadPackage').addEventListener('click', handleDownload);
+
+        // Form submission handler
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            const formData = {
+                companyName: document.getElementById('companyName').value,
+                industry: document.getElementById('industry').value,
+                description: document.getElementById('businessDescription').value,
+                style: document.getElementById('style').value,
+                colorPreference: document.getElementById('colorPreference').value,
+                keywords: document.getElementById('keywords').value
+            };
+
+            if (!formData.companyName || !formData.industry) {
+                alert('Por favor completa los campos obligatorios');
+                return;
+            }
+
+            generateBrand(formData);
+        }
+
+        // Brand generation function
+        function generateBrand(formData) {
+            showLoadingModal();
+            
+            // Simulate AI processing with realistic steps
+            const steps = [
+                'Analizando tu industria...',
+                'Generando conceptos de logo...',
+                'Creando paleta de colores...',
+                'Seleccionando tipografías...',
+                'Optimizando diseño...',
+                'Finalizando tu marca...'
+            ];
+
+            let currentStep = 0;
+            const stepInterval = setInterval(() => {
+                if (currentStep < steps.length) {
+                    document.getElementById('loadingStep').textContent = steps[currentStep];
+                    currentStep++;
+                } else {
+                    clearInterval(stepInterval);
+                    setTimeout(() => {
+                        hideLoadingModal();
+                        displayResults(formData);
+                        showSuccessModal();
+                    }, 1000);
+                }
+            }, 800);
+        }
+
+        // Display generated results
+        function displayResults(formData) {
+            const template = brandTemplates[formData.industry] || brandTemplates.tecnologia;
+            
+            // Generate logo
+            generateLogo(formData.companyName, template);
+            
+            // Generate color palette
+            generateColorPalette(template.colors);
+            
+            // Set typography
+            setTypography(template.fonts);
+            
+            // Set brand values
+            setBrandValues(template.values);
+            
+            // Show results section
+            resultsSection.classList.remove('hidden');
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Generate logo function
+        function generateLogo(companyName, template) {
+            const logoPreview = document.getElementById('logoPreview');
+            const colors = template.colors;
+            const icon = template.icons[Math.floor(Math.random() * template.icons.length)];
+            
+            logoPreview.innerHTML = `
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, ${colors[0]}, ${colors[1]});">
+                        <i class="${icon} text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-bold text-gray-900">${companyName}</h3>
+                        <p class="text-gray-600">Innovación Digital</p>
+                    </div>
+                </div>
+            `;
+
+            // Generate variants
+            generateLogoVariants(companyName, colors, icon);
+        }
+
+        // Generate logo variants
+        function generateLogoVariants(companyName, colors, icon) {
+            // Variant 1 - Light
+            document.getElementById('logoVariant1').innerHTML = `
+                <div class="flex flex-col items-center">
+                    <div class="w-8 h-8 rounded flex items-center justify-center" style="background-color: ${colors[0]};">
+                        <i class="${icon} text-white text-sm"></i>
+                    </div>
+                    <span class="text-xs font-semibold mt-1" style="color: ${colors[0]};">${companyName}</span>
+                </div>
+            `;
+
+            // Variant 2 - Dark
+            document.getElementById('logoVariant2').innerHTML = `
+                <div class="flex flex-col items-center">
+                    <div class="w-8 h-8 rounded flex items-center justify-center bg-white">
+                        <i class="${icon} text-sm" style="color: ${colors[0]};"></i>
+                    </div>
+                    <span class="text-xs font-semibold mt-1 text-white">${companyName}</span>
+                </div>
+            `;
+
+            // Variant 3 - Gradient
+            document.getElementById('logoVariant3').innerHTML = `
+                <div class="flex flex-col items-center">
+                    <div class="w-8 h-8 rounded flex items-center justify-center bg-white bg-opacity-20">
+                        <i class="${icon} text-white text-sm"></i>
+                    </div>
+                    <span class="text-xs font-semibold mt-1 text-white">${companyName}</span>
+                </div>
+            `;
+        }
+
+        // Generate color palette
+        function generateColorPalette(colors) {
+            const colorPalette = document.getElementById('colorPalette');
+            colorPalette.innerHTML = '';
+
+            colors.forEach((color, index) => {
+                const colorDiv = document.createElement('div');
+                colorDiv.className = 'aspect-square rounded-lg cursor-pointer hover:scale-105 transition-transform';
+                colorDiv.style.backgroundColor = color;
+                colorDiv.innerHTML = `
+                    <div class="w-full h-full rounded-lg flex items-end p-2">
+                        <span class="text-xs font-mono text-white bg-black bg-opacity-50 px-2 py-1 rounded">
+                            ${color}
+                        </span>
+                    </div>
+                `;
+                colorPalette.appendChild(colorDiv);
+            });
+        }
+
+        // Set typography
+        function setTypography(fonts) {
+            document.getElementById('primaryFont').textContent = fonts[0] + ' Bold';
+            document.getElementById('secondaryFont').textContent = fonts[1] + ' Regular';
+            
+            // Apply fonts to preview
+            document.getElementById('primaryFont').style.fontFamily = fonts[0];
+            document.getElementById('secondaryFont').style.fontFamily = fonts[1];
+        }
+
+        // Set brand values
+        function setBrandValues(values) {
+            const brandValues = document.getElementById('brandValues');
+            brandValues.innerHTML = '';
+
+            values.forEach(value => {
+                const valueSpan = document.createElement('span');
+                valueSpan.className = 'bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-medium';
+                valueSpan.textContent = value;
+                brandValues.appendChild(valueSpan);
+            });
+        }
+
+        // Modal functions
+        function showLoadingModal() {
+            loadingModal.classList.remove('hidden');
+        }
+
+        function hideLoadingModal() {
+            loadingModal.classList.add('hidden');
+        }
+
+        function showSuccessModal() {
+            successModal.classList.remove('hidden');
+        }
+
+        function closeSuccessModal() {
+            successModal.classList.add('hidden');
+        }
+
+        // Regenerate brand
+        function regenerateBrand() {
+            const formData = {
+                companyName: document.getElementById('companyName').value,
+                industry: document.getElementById('industry').value,
+                description: document.getElementById('businessDescription').value,
+                style: document.getElementById('style').value,
+                colorPreference: document.getElementById('colorPreference').value,
+                keywords: document.getElementById('keywords').value
+            };
+            
+            generateBrand(formData);
+        }
+
+        // Handle download
+        function handleDownload() {
+            // Simulate download process
+            const downloadBtn = document.getElementById('downloadPackage');
+            const originalText = downloadBtn.innerHTML;
+            
+            downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Preparando descarga...';
+            downloadBtn.disabled = true;
+            
+            setTimeout(() => {
+                downloadBtn.innerHTML = '<i class="fas fa-check mr-2"></i>¡Descarga Iniciada!';
+                
+                setTimeout(() => {
+                    downloadBtn.innerHTML = originalText;
+                    downloadBtn.disabled = false;
+                    
+                    // Show payment modal or redirect to payment
+                    alert('Redirigiendo a la página de pago seguro...');
+                }, 2000);
+            }, 3000);
+        }
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Login button functionality
+        document.getElementById('loginBtn').addEventListener('click', () => {
+            alert('Funcionalidad de login - Redirigir a página de autenticación');
+        });
+
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animate cards on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all cards
+            document.querySelectorAll('.card-hover').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97c59dc4c3ce8a88',t:'MTc1NzQwOTY5NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
